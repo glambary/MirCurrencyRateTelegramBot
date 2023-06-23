@@ -1,7 +1,7 @@
 import requests
 
 from bs4 import BeautifulSoup
-from requests import RequestException
+from requests import RequestException, Response
 from cachetools import cached, TTLCache
 from datetime import datetime, timedelta
 
@@ -17,7 +17,7 @@ cache = TTLCache(
 )
 
 
-def get_response(url):
+def get_response(url: str) -> Response | None:
     error_message = ERROR_MESSAGE + " - ошибка получения response."
 
     try:
@@ -33,7 +33,7 @@ def get_response(url):
     return response
 
 
-def get_parser(url):
+def get_parser(url: str) -> BeautifulSoup | None:
     response = get_response(url)
 
     if response is None:
@@ -44,7 +44,10 @@ def get_parser(url):
 
 
 @cached(cache)
-def get_currency_rate(currency_name='Белорусский рубль', n_percent=1.02):
+def get_currency_rate(
+        currency_name: str = 'Белорусский рубль',
+        n_percent: float = 1.02
+) -> tuple:
     print('Currency_rate запрошен с сайта')
     parser = get_parser(URL)
     if parser is None:

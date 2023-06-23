@@ -1,7 +1,7 @@
 from currency_rate_parse import get_currency_rate
 
 
-def get_info():
+def get_info() -> str:
     currency_rate, currency_rate_with_percent = get_currency_rate()
 
     old_currency = round(10000/currency_rate_with_percent, 2)
@@ -12,7 +12,7 @@ def get_info():
 """
 
 
-def get_amount_of_money_to_buy(n):
+def get_amount_of_money_to_buy(n: float) -> float:
     _, currency_rate_with_percent = get_currency_rate()
 
     return round(n * currency_rate_with_percent, 2)
